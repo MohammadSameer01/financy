@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+:root {
+  --brandColor1: #e0533d;
+  --brandColor2: #9da7d0;
+  --brandColor3: #469b88;
+  --brandColor4: #377ccb;
+  --brandColor5: #eed868;
+  --brandColor6: #e78c9d;
+  --baseColor1: #ffffff;
+  --baseColor2: #242424;
+}
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+html {
+  background: var(--baseColor2);
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(22, 27, 33, 0.04);
+}
+
+#openingSection {
+  background: var(--baseColor2);
+  color: var(--baseColor1);
+  padding: 12px;
+  height: 100vh;
+}
+.home-screen-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  /* background: red; */
+}
+.person-container {
+  position: relative;
+  max-width: 340px;
+  margin-top: 72px;
+  /* background: darkblue; */
+}
+.person-container > img {
+  width: 100%;
+}
+.person-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: 308px !important;
+  max-height: 409px !important;
+  margin-top: -67.5px;
+}
+
+.home-screen-message {
+  width: 340px;
+}
+.home-screen-message > h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.home-screen-message > p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: gray;
+}
+
+/* OPENING BALANCE CONTAINER IMPROVED */
+.opening-balance-container {
+  width: calc(100% - 24px);
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--baseColor2);
+  padding: 12px;
+  padding-top: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 480px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  /* 👇 Added box shadow */
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* LABEL */
+.opening-balance-container > label {
+  position: absolute;
+  padding: 0 4px;
+  top: 8px;
+  left: 12px;
+  font-size: 0.75rem;
+  color: gray;
+  pointer-events: none;
+}
+
+/* INPUT */
+.opening-balance-container > input {
+  max-width: calc(100% - 48px);
+  background: transparent;
+  color: var(--baseColor1);
+  font-size: 1.5rem;
+  padding: 6px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  transition: border-color 0.3s ease;
+}
+
+.opening-balance-container > input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--brandColor4);
+}
+
+/* BUTTON */
+.opening-balance-container > button {
+  height: 48px;
+  width: 48px;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--baseColor1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.opening-balance-container > button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.opening-balance-container > button svg {
+  fill: var(--baseColor2);
+}
+
+@keyframes removeScreenAnimation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes showScreenAnimation {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+#openingSection,
+#mainSection {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+#mainSection {
+  background: red;
+  min-height: 100%;
+}
