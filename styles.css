@@ -192,6 +192,170 @@ html {
 /*  */
 /*  */
 #mainSection {
-  background: red;
-  min-height: 100%;
+  min-height: 100vh;
+  padding: 24px 16px 80px;
+  background: var(--baseColor1);
+}
+/*  */
+.balances-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.balance-card {
+  background: var(--baseColor2);
+  color: var(--baseColor1);
+  padding: 12px;
+  flex: 1;
+  border-radius: 8px;
+}
+
+/* Make remaining full width */
+.remaining-card {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border-radius: 8px 8px 8px 0;
+  flex: 1;
+  position: relative;
+}
+.remaining-card::before {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: calc(50% - 4px);
+  height: 16px;
+  background: var(--baseColor2) !important;
+}
+.remaining-card::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  /* width: calc(50% - 4px); */
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  /* background: var(--baseColor1) !important; */
+  /* background: red; */
+}
+.shape-design {
+  height: calc(100% - 24px);
+  aspect-ratio: 1;
+  position: absolute;
+  border-radius: 50%;
+  top: 12px;
+}
+.shape-green {
+  background: var(--brandColor3);
+  right: 6px;
+}
+.shape-yellow {
+  background: var(--brandColor5);
+  right: 18px;
+}
+.shape-blue {
+  background: var(--brandColor4);
+  right: 30px;
+}
+.shape-brown {
+  background: var(--brandColor1);
+  right: 42px;
+}
+/*  */
+/*  */
+.opening-card {
+  border-radius: 0 0 8px 8px;
+}
+.balance-card .muted {
+  font-size: 0.65rem;
+  color: gray;
+  margin-bottom: 8px;
+}
+.balance-card > div:last-child {
+  font-weight: 500;
+}
+.remaining-card > div:last-child {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/*  */
+#expenseForm .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+#expenseForm input,
+#expenseForm select {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  flex: 1;
+}
+
+#expenseForm input:focus,
+#expenseForm select:focus {
+  outline: none;
+  border-color: var(--brandColor4);
+}
+
+#addExpenseBtn {
+  background: var(--brandColor4);
+  color: white;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#addExpenseBtn:hover {
+  transform: scale(1.05);
+}
+
+#expensesTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+#expensesTable th {
+  text-align: left;
+  font-size: 0.8rem;
+  color: gray;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#expensesTable td {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#expensesTable tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--brandColor6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.neg {
+  color: var(--brandColor1);
+  font-weight: 600;
 }
