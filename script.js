@@ -38,39 +38,49 @@ function load() {
 function updateDisplays() {
   const spent = expenses.reduce((s, it) => s + Number(it.amount), 0);
   const remaining = opening - spent;
-  openingDisplay.textContent = opening.toFixed(2);
-  spentDisplay.textContent = spent.toFixed(2);
-  remainingDisplay.textContent = remaining.toFixed(2);
+  openingDisplay.textContent = `₹${opening.toFixed(2)}`;
+  spentDisplay.textContent = `₹${spent.toFixed(2)}`;
+  remainingDisplay.textContent = `₹${remaining.toFixed(2)}`;
   remainingDisplay.classList.toggle("neg", remaining < 0);
 }
 
 function renderExpenses() {
   expensesTableBody.innerHTML = "";
   expenses.forEach((ex, idx) => {
+    console.log(ex);
     const tr = document.createElement("tr");
+    const tdDate = document.createElement("td");
+    tdDate.textContent = ex.date || "";
     const tdDesc = document.createElement("td");
     tdDesc.textContent = ex.desc;
     const tdCat = document.createElement("td");
     tdCat.textContent = ex.category || defaultCategory;
     const tdAmt = document.createElement("td");
-    tdAmt.textContent = Number(ex.amount).toFixed(2);
+    tdAmt.textContent = `₹${ex.amount.toFixed(2)}`;
     const tdAct = document.createElement("td");
     const del = document.createElement("button");
     del.textContent = "Delete";
     del.className = "ghost";
     del.style.padding = "6px 8px";
     del.onclick = () => {
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this transaction?",
+      );
+
+      if (!confirmDelete) return; // stop if user clicks Cancel
+
       expenses.splice(idx, 1);
       save();
       renderExpenses();
       updateDisplays();
     };
     tdAct.appendChild(del);
-    tr.appendChild(tdDesc);
-    tr.appendChild(tdCat);
     tr.appendChild(tdAmt);
+    tr.appendChild(tdCat);
+    tr.appendChild(tdDesc);
+    tr.appendChild(tdDate);
     tr.appendChild(tdAct);
-    expensesTableBody.appendChild(tr);
+    expensesTableBody.prepend(tr);
   });
 }
 
@@ -103,18 +113,23 @@ openingInput.addEventListener("keypress", (e) => {
 });
 
 addExpenseBtn.addEventListener("click", () => {
-  const d = desc.value.trim();
+  let d = desc.value.trim();
   const c = categoryEl && categoryEl.value ? categoryEl.value : defaultCategory;
   const a = parseFloat(amount.value);
-  if (!d) {
-    alert("Enter description");
-    return;
+
+  if (d === "") {
+    d = "Expense";
   }
   if (isNaN(a) || a <= 0) {
     alert("Enter a positive amount");
     return;
   }
-  expenses.push({ desc: d, category: c, amount: Number(a) });
+  expenses.push({
+    category: c,
+    amount: Number(a),
+    desc: d,
+    date: new Date().toLocaleString(), // 👈 automatic date & time
+  });
   save();
   renderExpenses();
   updateDisplays();
