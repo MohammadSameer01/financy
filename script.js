@@ -16,6 +16,11 @@ const expensesTableBody = qs("#expensesTable tbody");
 const resetBtn = qs("#resetBtn");
 const defaultCategory = "General";
 
+const card = qs(".card");
+const formContainer = qs(".form-container");
+const formAccessBtn = qs(".form-access-btn");
+const expenseForm = qs("#expenseForm");
+
 let opening = 0;
 let expenses = [];
 
@@ -47,7 +52,6 @@ function updateDisplays() {
 function renderExpenses() {
   expensesTableBody.innerHTML = "";
   expenses.forEach((ex, idx) => {
-    console.log(ex);
     const tr = document.createElement("tr");
     const tdDate = document.createElement("td");
     tdDate.textContent = ex.date || "";
@@ -58,6 +62,7 @@ function renderExpenses() {
     const tdAmt = document.createElement("td");
     tdAmt.textContent = `₹${ex.amount.toFixed(2)}`;
     const tdAct = document.createElement("td");
+    tdAct.setAttribute("class", "delete-transaction-btn");
     const del = document.createElement("button");
     del.textContent = "Delete";
     del.className = "ghost";
@@ -106,13 +111,15 @@ setOpeningBtn.addEventListener("click", () => {
   showMain();
   openingSection.style.animation = "removeScreenAnimation 0.3s forwards";
   mainSection.style.animation = "showScreenAnimation 0.3s forwards";
+  formContainer.style.display = "flex";
 });
 
 openingInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") setOpeningBtn.click();
 });
 
-addExpenseBtn.addEventListener("click", () => {
+addExpenseBtn.addEventListener("click", addExpense);
+function addExpense() {
   let d = desc.value.trim();
   const c = categoryEl && categoryEl.value ? categoryEl.value : defaultCategory;
   const a = parseFloat(amount.value);
@@ -120,23 +127,30 @@ addExpenseBtn.addEventListener("click", () => {
   if (d === "") {
     d = "Expense";
   }
+
   if (isNaN(a) || a <= 0) {
     alert("Enter a positive amount");
     return;
   }
+
   expenses.push({
     category: c,
     amount: Number(a),
     desc: d,
-    date: new Date().toLocaleString(), // 👈 automatic date & time
+    date: new Date().toLocaleString(),
   });
+
   save();
   renderExpenses();
   updateDisplays();
+
   desc.value = "";
   amount.value = "";
-  desc.focus();
-});
+  amount.focus();
+
+  formAccessBtn.click();
+  amount.required = false;
+}
 
 resetBtn.addEventListener("click", () => {
   if (!confirm("Clear opening balance and all expenses?")) return;
@@ -145,7 +159,7 @@ resetBtn.addEventListener("click", () => {
   openingSection.style.display = "";
   openingSection.style.animation = "showScreenAnimation 0.3s forwards";
   mainSection.style.animation = "removeScreenAnimation 0.3s forwards";
-
+  formContainer.style.display = "none";
   setTimeout(() => {
     document.body.style.overflow = "";
     localStorage.removeItem(openingKey);
@@ -163,4 +177,39 @@ if (opening > 0) showMain();
 else {
   openingSection.style.display = "";
   mainSection.style.display = "none";
+  formContainer.style.display = "none";
 }
+
+//
+//
+//
+
+formAccessBtn.addEventListener("click", () => {
+  const isOpen = formContainer.classList.contains("show");
+
+  if (isOpen) {
+    // 🔴 CLOSE
+    formContainer.classList.remove("show");
+    expenseForm.classList.remove("active");
+    formAccessBtn.classList.remove("form-opened");
+    card.style.filter = "";
+  } else {
+    // 🟢 OPEN
+    formContainer.classList.add("show");
+    card.style.filter = "brightness(25%)";
+    formAccessBtn.classList.add("form-opened");
+
+    setTimeout(() => {
+      expenseForm.classList.add("active");
+      amount.required = true;
+      amount.focus(); // auto focus input
+    }, 200); // match your animation time
+  }
+});
+
+expensesTableBody.addEventListener("dblclick", (e) => {
+  const clickedRow = e.target.closest("tr");
+  if (!clickedRow) return;
+
+  clickedRow.classList.toggle("active-row");
+});

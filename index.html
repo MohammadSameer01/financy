@@ -6,7 +6,7 @@
     <title>Basic Expenses Tracker</title>
     <link rel="stylesheet" href="styles.css" />
     <meta name="theme-color" content="#242424" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
   </head>
 
   <body>
@@ -48,10 +48,12 @@
           </div>
         </div>
       </div>
-
       <div id="mainSection" style="display: none">
         <div class="balances-container">
           <div class="balance-card remaining-card">
+            <div class="remaining-card-design">
+              <!-- Green colour design at the left bottom -->
+            </div>
             <div class="muted">Remaining</div>
             <div id="remainingDisplay">0.00</div>
           </div>
@@ -65,36 +67,13 @@
           </div>
         </div>
 
-        <form id="expenseForm" onsubmit="return false;">
-          <div class="row">
-            <input
-              id="amount"
-              type="number"
-              min="0.01"
-              step="0.01"
-              placeholder="Amount"
-              required
-            />
-            <select id="category" aria-label="Category">
-              <option value="General">General</option>
-              <option value="Food">Food</option>
-              <option value="Transport">Transport</option>
-              <option value="Bills">Bills</option>
-              <option value="Shopping">Shopping</option>
-              <option value="Other">Other</option>
-            </select>
-            <input id="desc" type="text" placeholder="Description" />
-            <button id="addExpenseBtn">Add Expense</button>
-          </div>
-        </form>
-
         <table id="expensesTable">
           <thead>
             <tr>
               <th>Description</th>
               <th>Category</th>
               <th>Amount</th>
-              <th></th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -107,6 +86,37 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="form-container">
+      <div class="form-access-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+          <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+          <path
+            d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"
+          />
+        </svg>
+      </div>
+      <form class="" id="expenseForm">
+        <div class="row">
+          <input
+            id="amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="Amount"
+          />
+          <select id="category" aria-label="Category">
+            <option value="General">General</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Bills">Bills</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Other">Other</option>
+          </select>
+          <input id="desc" type="text" placeholder="Description" />
+          <button type="submit" id="addExpenseBtn">Add Expense</button>
+        </div>
+      </form>
     </div>
     <script src="script.js"></script>
   </body>

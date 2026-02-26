@@ -2,7 +2,7 @@
   "name": "Financy - Expense Tracker",
   "short_name": "Financy",
   "description": "Track your daily expenses easily and manage your budget.",
-  "start_url": "./index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#242424",
   "theme_color": "#242424",

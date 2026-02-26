@@ -211,29 +211,98 @@ html {
   flex: 1;
   border-radius: 8px;
 }
-
-/* Make remaining full width */
-.remaining-card {
-  grid-column: 1 / -1;
-  padding: 16px;
-  border-radius: 8px 8px 8px 0;
-  flex: 1;
-  position: relative;
-}
 .balance-card .muted {
-  font-size: 0.75rem;
-  color: gray;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 8px;
 }
 .balance-card > div:last-child {
+  font-size: 1.25rem;
   font-weight: 500;
 }
+/* Make remaining full width */
+.remaining-card {
+  grid-column: 1 / -1;
+  padding: 16px 16px 48px 16px;
+  border-radius: 8px;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
 .remaining-card > div:last-child {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
 }
-
+.remaining-card::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  right: 12px;
+  width: 72px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: var(--brandColor4);
+}
+.remaining-card::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  right: -36px;
+  width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: var(--brandColor5);
+}
+.remaining-card-design {
+  height: 72px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  bottom: -36px;
+  left: -24px;
+  background: var(--brandColor3);
+  border-radius: 50%;
+}
 /*  */
+.form-container {
+  position: fixed;
+  width: 60px;
+  aspect-ratio: 1;
+  bottom: 16px;
+  right: 16px;
+  border-radius: 50%;
+  background: var(--baseColor1);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--baseColor2);
+}
+.form-container.show {
+  width: calc(100% - 32px);
+  max-width: 480px;
+  border-radius: 14px;
+  padding: 16px;
+}
+.form-access-btn {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.form-access-btn.form-opened {
+  right: 12px;
+  top: 12px;
+  transform: rotate(45deg);
+}
+#expenseForm.active {
+  display: flex;
+}
+#expenseForm {
+  display: none;
+  /* flex-direction: column; */
+  /* border: 2px solid red; */
+}
 #expenseForm .row {
   display: flex;
   flex-wrap: wrap;
@@ -248,8 +317,14 @@ html {
   padding: 10px;
   border-radius: 8px;
   flex: 1;
+  background: transparent;
 }
-
+#expenseForm input::placeholder {
+  color: var(--baseColor2);
+}
+#expenseForm input[type="number"] {
+  font-size: 1.5em;
+}
 #expenseForm input:focus,
 #expenseForm select:focus {
   outline: none;
@@ -268,15 +343,22 @@ html {
 #addExpenseBtn:hover {
   transform: scale(1.05);
 }
-
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
 #expensesTable {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 24px;
+  user-select: none;
 }
 
 #expensesTable th {
-  text-align: left;
+  text-align: center;
   font-size: 0.8rem;
   color: gray;
   padding: 8px 0;
@@ -288,23 +370,50 @@ html {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+#expensesTable tr {
+  max-width: 100%;
+  position: relative;
+}
 #expensesTable tr:hover {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.ghost {
-  background: transparent;
-  color: var(--brandColor6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s ease;
+.delete-transaction-btn {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  background: red;
+  border-radius: 8px;
+  transition:
+    width 0.2s ease,
+    visibility 0.1s ease;
+  width: 20%;
+  visibility: hidden;
+}
+.delete-transaction-btn .ghost {
+  font-size: 0;
+}
+tr.active-row .delete-transaction-btn {
+  width: 50%;
+  visibility: visible;
+  transition: width 0.2s ease;
+}
+tr.active-row .delete-transaction-btn .ghost {
+  font-size: 1em;
 }
 
+.ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
 .ghost:hover {
   background: rgba(255, 255, 255, 0.08);
 }
-
 .neg {
   color: var(--brandColor1);
   font-weight: 600;
