@@ -2,29 +2,29 @@
   "name": "Financy - Expense Tracker",
   "short_name": "Financy",
   "description": "Track your daily expenses easily and manage your budget.",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#242424",
   "theme_color": "#242424",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/assets/icons/icon-32.png",
+      "src": "assets/icons/icon-32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/icon-96.png",
+      "src": "assets/icons/icon-96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/icon-256.png",
+      "src": "assets/icons/icon-256.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/icon-512.png",
+      "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
