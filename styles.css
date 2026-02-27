@@ -263,85 +263,138 @@ html {
   border-radius: 50%;
 }
 /*  */
+
+/* Floating Container */
 .form-container {
   position: fixed;
-  width: 60px;
-  aspect-ratio: 1;
-  bottom: 16px;
-  right: 16px;
+  width: 64px;
+  height: 64px;
+  bottom: 20px;
+  right: 20px;
   border-radius: 50%;
-  background: var(--baseColor1);
-  transition: all 0.2s ease;
+  transition: all 0.35s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--baseColor2);
+  background: var(--brandColor1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 1000;
 }
+
+/* Expanded State */
 .form-container.show {
   width: calc(100% - 32px);
-  max-width: 480px;
-  border-radius: 14px;
-  padding: 16px;
+  height: auto;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
 }
+
+/* Floating + Icon */
 .form-access-btn {
-  position: absolute;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  fill: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
 }
+
+.form-access-btn svg {
+  width: 26px;
+}
+
 .form-access-btn.form-opened {
+  position: absolute;
+  top: -60px;
   right: 12px;
-  top: 12px;
   transform: rotate(45deg);
+  fill: #333;
+  background: white;
 }
+
+/* Form */
+#expenseForm {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  animation: fadeIn 0.3s ease forwards;
+}
+
 #expenseForm.active {
   display: flex;
 }
-#expenseForm {
-  display: none;
-  /* flex-direction: column; */
-  /* border: 2px solid red; */
-}
+
 #expenseForm .row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 12px;
   width: 100%;
 }
 
+/* Inputs */
 #expenseForm input,
 #expenseForm select {
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 8px;
-  flex: 1;
-  background: transparent;
+  flex: 1 1 140px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+  background: #f9fafb;
 }
+
 #expenseForm input::placeholder {
-  color: var(--baseColor2);
+  color: #9ca3af;
 }
+
 #expenseForm input[type="number"] {
-  font-size: 1.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
+
 #expenseForm input:focus,
 #expenseForm select:focus {
   outline: none;
-  border-color: var(--brandColor4);
+  border-color: var(--brandColor1);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  background: white;
 }
 
+/* Add Button */
 #addExpenseBtn {
   background: var(--brandColor4);
   color: white;
-  border-radius: 8px;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: 0.2s ease;
+  border-radius: 14px;
+  padding: 12px;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: 0.25s ease;
 }
 
 #addExpenseBtn:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 /*  */
 /*  */
@@ -355,6 +408,7 @@ html {
   border-collapse: collapse;
   margin-bottom: 24px;
   user-select: none;
+  font-size: 0.5em;
 }
 
 #expensesTable th {
@@ -368,6 +422,7 @@ html {
 #expensesTable td {
   padding: 10px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
 }
 
 #expensesTable tr {
@@ -377,7 +432,9 @@ html {
 #expensesTable tr:hover {
   background: rgba(255, 255, 255, 0.03);
 }
-
+#expensesTable tr > td:first-child {
+  color: var(--brandColor1);
+}
 .delete-transaction-btn {
   position: absolute;
   height: 100%;
@@ -417,4 +474,26 @@ tr.active-row .delete-transaction-btn .ghost {
 .neg {
   color: var(--brandColor1);
   font-weight: 600;
+}
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+.notification-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 8px;
+}
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.notifications > div {
+  background: var(--brandColor3);
+  padding: 16px 12px;
+  border-radius: 8px;
 }

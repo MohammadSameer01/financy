@@ -118,7 +118,10 @@ openingInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") setOpeningBtn.click();
 });
 
-addExpenseBtn.addEventListener("click", addExpense);
+expenseForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  addExpense();
+});
 function addExpense() {
   let d = desc.value.trim();
   const c = categoryEl && categoryEl.value ? categoryEl.value : defaultCategory;
@@ -150,6 +153,10 @@ function addExpense() {
 
   formAccessBtn.click();
   amount.required = false;
+
+  setTimeout(() => {
+    sendNotification(`Added new expense of ₹${a}`);
+  }, 200);
 }
 
 resetBtn.addEventListener("click", () => {
@@ -213,3 +220,22 @@ expensesTableBody.addEventListener("dblclick", (e) => {
 
   clickedRow.classList.toggle("active-row");
 });
+
+//
+//
+//
+//
+const notifications = qs(".notifications");
+function sendNotification(message) {
+  const notification = document.createElement("div");
+  notification.textContent = message;
+  notifications.prepend(notification);
+  if (navigator) {
+    navigator.vibrate(200);
+  }
+
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
