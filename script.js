@@ -270,3 +270,20 @@ function tableHead() {
   }
 }
 tableHead();
+//
+//
+//
+//
+let cats = {};
+expenses.forEach((e) => {
+  if (!cats[e.category]) {
+    cats[e.category] = {
+      count: 1,
+      totalAmount: e.amount,
+    };
+  } else {
+    cats[e.category].count++;
+    cats[e.category].totalAmount += e.amount;
+  }
+});
+console.log(cats);
