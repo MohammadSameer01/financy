@@ -96,8 +96,11 @@ function showMain() {
     openingSection.style.display = "none";
     document.body.style.overflow = "";
   }, 300);
-  renderExpenses();
-  updateDisplays();
+  setTimeout(() => {
+    renderExpenses();
+    updateDisplays();
+    tableHead();
+  }, 300);
 }
 
 setOpeningBtn.addEventListener("click", () => {
@@ -146,6 +149,7 @@ function addExpense() {
   save();
   renderExpenses();
   updateDisplays();
+  tableHead();
 
   desc.value = "";
   amount.value = "";
@@ -200,11 +204,15 @@ formAccessBtn.addEventListener("click", () => {
     expenseForm.classList.remove("active");
     formAccessBtn.classList.remove("form-opened");
     card.style.filter = "";
+    mainSection.style.top = "";
+    document.body.querySelector(".reset-all-btn").style.display = "";
   } else {
     // 🟢 OPEN
     formContainer.classList.add("show");
     card.style.filter = "brightness(25%)";
     formAccessBtn.classList.add("form-opened");
+    mainSection.style.top = "-60px";
+    document.body.querySelector(".reset-all-btn").style.display = "none";
 
     setTimeout(() => {
       expenseForm.classList.add("active");
@@ -214,11 +222,23 @@ formAccessBtn.addEventListener("click", () => {
   }
 });
 
-expensesTableBody.addEventListener("dblclick", (e) => {
+let pressTimer;
+const longPressDuration = 500; // 500ms = half second
+expensesTableBody.addEventListener("touchstart", (e) => {
   const clickedRow = e.target.closest("tr");
   if (!clickedRow) return;
 
-  clickedRow.classList.toggle("active-row");
+  pressTimer = setTimeout(() => {
+    clickedRow.classList.toggle("active-row");
+  }, longPressDuration);
+});
+
+expensesTableBody.addEventListener("touchend", () => {
+  clearTimeout(pressTimer);
+});
+
+expensesTableBody.addEventListener("touchmove", () => {
+  clearTimeout(pressTimer);
 });
 
 //
@@ -239,3 +259,14 @@ function sendNotification(message) {
     notification.remove();
   }, 3000);
 }
+
+function tableHead() {
+  const thead = qs("#expensesTable thead");
+  const tableRows = expensesTableBody.querySelectorAll("tr").length;
+  if (tableRows <= 0) {
+    thead.style.display = "none";
+  } else {
+    thead.style.display = "";
+  }
+}
+tableHead();

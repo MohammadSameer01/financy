@@ -16,11 +16,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 html {
   background: var(--baseColor2);
+}
+
+header {
+  background: var(--baseColor1);
+  height: 60px;
+}
+h1 {
+  height: 100%;
+  display: flex;
+  padding-left: 16px;
+  align-items: center;
 }
 
 .card {
@@ -193,8 +205,10 @@ html {
 /*  */
 #mainSection {
   min-height: 100vh;
-  padding: 24px 16px 80px;
+  padding: 6px 16px 80px 16px;
   background: var(--baseColor1);
+  top: 60px;
+  transition: 0.3s ease;
 }
 /*  */
 .balances-container {
@@ -285,7 +299,7 @@ html {
 /* Expanded State */
 .form-container.show {
   width: calc(100% - 32px);
-  height: auto;
+  height: 273.6px;
   max-width: 500px;
   border-radius: 20px;
   padding: 24px;
@@ -331,11 +345,14 @@ html {
 #expenseForm.active {
   display: flex;
 }
-
+#expenseForm h1 {
+  font-size: 1.5em;
+}
 #expenseForm .row {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  column-gap: 6px;
   width: 100%;
 }
 
@@ -350,7 +367,14 @@ html {
   transition: 0.25s ease;
   background: #f9fafb;
 }
-
+#expenseForm select {
+  width: calc(40% - 3px);
+  flex: unset;
+}
+#expenseForm input[type="text"] {
+  width: calc(60% - 3px);
+  flex: unset;
+}
 #expenseForm input::placeholder {
   color: #9ca3af;
 }
@@ -373,11 +397,13 @@ html {
   background: var(--brandColor4);
   color: white;
   border-radius: 14px;
-  padding: 12px;
+  padding: 16px;
   border: none;
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: 0.25s ease;
+  margin: auto;
+  margin-top: 12px;
 }
 
 #addExpenseBtn:hover {
@@ -405,23 +431,32 @@ html {
 /*  */
 #expensesTable {
   width: 100%;
+  max-width: fit-content;
   border-collapse: collapse;
   margin-bottom: 24px;
   user-select: none;
-  font-size: 0.5em;
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-radius: 8px 8px 0 0;
 }
-
+#expensesTable::-webkit-scrollbar {
+  display: none;
+}
+thead {
+  background: var(--baseColor2);
+  color: var(--baseColor1);
+}
 #expensesTable th {
   text-align: center;
   font-size: 0.8rem;
-  color: gray;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 #expensesTable td {
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   text-align: center;
 }
 
@@ -435,10 +470,14 @@ html {
 #expensesTable tr > td:first-child {
   color: var(--brandColor1);
 }
+#expensesTable > tbody td:nth-child(4) {
+  font-size: 0.75em;
+}
 .delete-transaction-btn {
   position: absolute;
-  height: 100%;
-  right: 0;
+  height: calc(100% - 12px);
+  margin-top: 6px;
+  right: 6px;
   background: red;
   border-radius: 8px;
   transition:
@@ -446,12 +485,13 @@ html {
     visibility 0.1s ease;
   width: 20%;
   visibility: hidden;
+  padding: unset !important;
 }
 .delete-transaction-btn .ghost {
   font-size: 0;
 }
 tr.active-row .delete-transaction-btn {
-  width: 50%;
+  width: 120px;
   visibility: visible;
   transition: width 0.2s ease;
 }
@@ -483,8 +523,9 @@ tr.active-row .delete-transaction-btn .ghost {
 /*  */
 .notification-container {
   position: fixed;
-  top: 0;
-  width: 100%;
+  bottom: 88px;
+  right: 20px;
+  width: 75%;
   padding: 8px;
 }
 .notifications {
@@ -496,4 +537,20 @@ tr.active-row .delete-transaction-btn .ghost {
   background: var(--brandColor3);
   padding: 16px 12px;
   border-radius: 8px;
+  color: white;
+}
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+.reset-all-btn {
+  background: var(--baseColor2);
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  left: 20px;
+  bottom: 20px;
+  border-radius: 50%;
 }
