@@ -166,6 +166,8 @@ function addExpense() {
 resetBtn.addEventListener("click", () => {
   if (!confirm("Clear opening balance and all expenses?")) return;
 
+  if (!confirm("All the data will be deleted. Are you sure?")) return;
+
   document.body.style.overflow = "hidden";
   openingSection.style.display = "";
   openingSection.style.animation = "showScreenAnimation 0.3s forwards";

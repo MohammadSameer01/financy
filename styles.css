@@ -554,3 +554,44 @@ tr.active-row .delete-transaction-btn .ghost {
   bottom: 20px;
   border-radius: 50%;
 }
+
+@media screen and (min-width: 600px) {
+  .home-screen-container {
+    flex-direction: row;
+    height: 75%;
+    width: 100%;
+    justify-content: center;
+  }
+  .opening-balance-container {
+    max-width: 40%;
+    position: absolute;
+    margin-left: initial;
+    transform: initial;
+    left: unset;
+    bottom: 12%;
+  }
+  #openingInput {
+    width: calc(100% - 48px);
+  }
+  /* Chrome, Safari, Edge */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  header,
+  #mainSection {
+    width: 420px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .notification-container {
+    max-width: 420px;
+  }
+}
