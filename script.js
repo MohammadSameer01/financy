@@ -12,7 +12,7 @@ const desc = qs("#desc");
 const categoryEl = qs("#category");
 const amount = qs("#amount");
 const addExpenseBtn = qs("#addExpenseBtn");
-const expensesTableBody = qs("#expensesTable tbody");
+const expensesTableBody = qs("#expensesTable");
 const resetBtn = qs("#resetBtn");
 const defaultCategory = "General";
 
@@ -52,17 +52,33 @@ function updateDisplays() {
 function renderExpenses() {
   expensesTableBody.innerHTML = "";
   expenses.forEach((ex, idx) => {
-    const tr = document.createElement("tr");
-    const tdDate = document.createElement("td");
-    tdDate.textContent = ex.date || "";
-    const tdDesc = document.createElement("td");
-    tdDesc.textContent = ex.desc;
-    const tdCat = document.createElement("td");
-    tdCat.textContent = ex.category || defaultCategory;
-    const tdAmt = document.createElement("td");
-    tdAmt.textContent = `₹${ex.amount.toFixed(2)}`;
-    const tdAct = document.createElement("td");
-    tdAct.setAttribute("class", "delete-transaction-btn");
+    const transaction = document.createElement("div");
+    transaction.className = "transaction-row";
+    transaction.setAttribute("data-idx", idx);
+    transaction.setAttribute(
+      "title",
+      `Category: ${ex.category}\nDescription: ${ex.desc}\nAmount: ₹${ex.amount.toFixed(2)}\nDate: ${ex.date}`,
+    );
+    const date = createDateElement(ex.date);
+    const description = document.createElement("div");
+    description.setAttribute("class", "transaction-desc");
+    description.setAttribute("title", `Description: ${ex.desc}`);
+    description.setAttribute("data-desc", ex.desc);
+    description.textContent = ex.desc;
+    const category = document.createElement("div");
+    category.setAttribute("class", "transaction-category");
+    category.setAttribute("title", `Category: ${ex.category}`);
+    category.setAttribute("data-category", ex.category);
+    category.textContent = ex.category || defaultCategory;
+    const amountDisplay = document.createElement("div");
+    amountDisplay.setAttribute("class", "transaction-amount");
+    amountDisplay.setAttribute("title", `Amount: ₹${ex.amount.toFixed(2)}`);
+    amountDisplay.setAttribute("data-amount", ex.amount);
+    amountDisplay.textContent = `₹${ex.amount.toFixed(2)}`;
+    const action = document.createElement("td");
+    action.setAttribute("title", "Delete this transaction");
+    action.setAttribute("data-idx", idx);
+    action.setAttribute("class", "delete-transaction-btn");
     const del = document.createElement("button");
     del.textContent = "Delete";
     del.className = "ghost";
@@ -79,14 +95,41 @@ function renderExpenses() {
       renderExpenses();
       updateDisplays();
     };
-    tdAct.appendChild(del);
-    tr.appendChild(tdAmt);
-    tr.appendChild(tdCat);
-    tr.appendChild(tdDesc);
-    tr.appendChild(tdDate);
-    tr.appendChild(tdAct);
-    expensesTableBody.prepend(tr);
+    action.appendChild(del);
+    transaction.appendChild(amountDisplay);
+    transaction.appendChild(category);
+    transaction.appendChild(description);
+    transaction.appendChild(date);
+    transaction.appendChild(action);
+    expensesTableBody.prepend(transaction);
   });
+}
+
+function createDateElement(dateTime) {
+  const dateDiv = document.createElement("div");
+  dateDiv.className = "transaction-date";
+  dateDiv.setAttribute("title", `Date: ${dateTime}`);
+
+  if (!dateTime) return dateDiv;
+
+  const parts = dateTime.split(", ");
+  // because toLocaleString() returns: "3/13/2026, 10:42:21 PM"
+
+  const datePart = parts[0] || "";
+  const timePart = parts[1] || "";
+
+  const dateSpan = document.createElement("span");
+  dateSpan.className = "date-part";
+  dateSpan.textContent = datePart;
+
+  const timeSpan = document.createElement("span");
+  timeSpan.className = "time-part";
+  timeSpan.textContent = timePart;
+
+  dateDiv.appendChild(dateSpan);
+  dateDiv.appendChild(timeSpan);
+
+  return dateDiv;
 }
 
 function showMain() {
@@ -99,7 +142,6 @@ function showMain() {
   setTimeout(() => {
     renderExpenses();
     updateDisplays();
-    tableHead();
   }, 300);
 }
 
@@ -149,7 +191,6 @@ function addExpense() {
   save();
   renderExpenses();
   updateDisplays();
-  tableHead();
 
   desc.value = "";
   amount.value = "";
@@ -219,7 +260,6 @@ formAccessBtn.addEventListener("click", () => {
     setTimeout(() => {
       expenseForm.classList.add("active");
       amount.required = true;
-      amount.focus(); // auto focus input
     }, 200); // match your animation time
   }
 });
@@ -227,7 +267,7 @@ formAccessBtn.addEventListener("click", () => {
 let pressTimer;
 const longPressDuration = 500; // 500ms = half second
 expensesTableBody.addEventListener("touchstart", (e) => {
-  const clickedRow = e.target.closest("tr");
+  const clickedRow = e.target.closest("div");
   if (!clickedRow) return;
 
   pressTimer = setTimeout(() => {
@@ -262,16 +302,6 @@ function sendNotification(message) {
   }, 3000);
 }
 
-function tableHead() {
-  const thead = qs("#expensesTable thead");
-  const tableRows = expensesTableBody.querySelectorAll("tr").length;
-  if (tableRows <= 0) {
-    thead.style.display = "none";
-  } else {
-    thead.style.display = "";
-  }
-}
-tableHead();
 //
 //
 //
@@ -288,4 +318,3 @@ expenses.forEach((e) => {
     cats[e.category].totalAmount += e.amount;
   }
 });
-console.log(cats);

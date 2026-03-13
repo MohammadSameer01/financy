@@ -27,6 +27,7 @@ html {
 header {
   background: var(--baseColor1);
   height: 60px;
+  background: rgb(240, 240, 240);
 }
 h1 {
   height: 100%;
@@ -209,6 +210,8 @@ h1 {
   background: var(--baseColor1);
   top: 60px;
   transition: 0.3s ease;
+  background: rgb(240, 240, 240);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 /*  */
 .balances-container {
@@ -431,48 +434,60 @@ h1 {
 /*  */
 #expensesTable {
   width: 100%;
-  max-width: fit-content;
-  border-collapse: collapse;
+  max-width: 100%;
   margin-bottom: 24px;
   user-select: none;
-  display: block;
-  overflow-x: auto;
-  border-collapse: collapse;
-  border-radius: 8px 8px 0 0;
+  display: grid;
+  gap: 6px;
 }
 #expensesTable::-webkit-scrollbar {
   display: none;
 }
-thead {
-  background: var(--baseColor2);
-  color: var(--baseColor1);
-}
-#expensesTable th {
-  text-align: center;
-  font-size: 0.8rem;
-  padding: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-#expensesTable td {
-  padding: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-#expensesTable tr {
-  max-width: 100%;
+.transaction-row {
+  display: flex;
+  flex-wrap: wrap;
   position: relative;
+  border-radius: 12px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--baseColor1);
 }
-#expensesTable tr:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-#expensesTable tr > td:first-child {
+
+.transaction-amount {
+  /* background: red; */
   color: var(--brandColor1);
+  order: 1;
+  top: 0;
+  right: 0;
+  position: absolute;
+  height: calc(100% - 34px);
+  align-content: center;
+  margin-right: 12px;
+  font-size: 1.25em;
+  font-weight: 600;
 }
-#expensesTable > tbody td:nth-child(4) {
-  font-size: 0.75em;
+.transaction-category {
+  flex: 0 1 100%;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
+.transaction-desc {
+  /* background: green; */
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+.transaction-date {
+  margin-left: auto;
+}
+.date-part {
+  display: none;
+}
+/*  */
 .delete-transaction-btn {
   position: absolute;
   height: calc(100% - 12px);
@@ -489,14 +504,6 @@ thead {
 }
 .delete-transaction-btn .ghost {
   font-size: 0;
-}
-tr.active-row .delete-transaction-btn {
-  width: 120px;
-  visibility: visible;
-  transition: width 0.2s ease;
-}
-tr.active-row .delete-transaction-btn .ghost {
-  font-size: 1em;
 }
 
 .ghost {
@@ -546,13 +553,13 @@ tr.active-row .delete-transaction-btn .ghost {
 /*  */
 /*  */
 .reset-all-btn {
-  background: var(--baseColor2);
-  position: fixed;
-  width: 60px;
+  background: red;
+  /* position: fixed; */
+  width: 100%;
+  border-radius: 12px;
   height: 60px;
-  left: 20px;
-  bottom: 20px;
-  border-radius: 50%;
+  margin-top: 100vh;
+  margin-bottom: 12px;
 }
 
 @media screen and (min-width: 600px) {
